@@ -1,585 +1,110 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>KrishiSetu - Mandi Prices</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
-
-    body {
-      background: #f4f8f3;
-      color: #1f2937;
-    }
-
-    /* Header */
-    header {
-      background: #166534;
-      color: white;
-      padding: 18px 7%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      font-size: 25px;
-      font-weight: bold;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin-left: 25px;
-    }
-
-    /* Hero */
-    .hero {
-      padding: 45px 7%;
-      background: linear-gradient(135deg, #dcfce7, #f0fdf4);
-    }
-
-    .hero h1 {
-      font-size: 38px;
-      color: #14532d;
-      margin-bottom: 10px;
-    }
-
-    .hero p {
-      color: #4b5563;
-      margin-bottom: 25px;
-    }
-
-    /* Search */
-    .search-box {
-      display: flex;
-      gap: 10px;
-      max-width: 700px;
-    }
-
-    .search-box input,
-    .search-box select {
-      padding: 14px;
-      border: 1px solid #d1d5db;
-      border-radius: 8px;
-      background: white;
-    }
-
-    .search-box input {
-      flex: 1;
-    }
-
-    /* Stats */
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      padding: 30px 7%;
-    }
-
-    .stat {
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
-    }
-
-    .stat h2 {
-      color: #166534;
-    }
-
-    /* Mandi */
-    .container {
-      padding: 10px 7% 50px;
-    }
-
-    .container h2 {
-      margin: 20px 0;
-      color: #14532d;
-    }
-
-    .mandi-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
-    }
-
-    .mandi-card {
-      background: white;
-      padding: 22px;
-      border-radius: 14px;
-      box-shadow: 0 3px 15px rgba(0,0,0,0.08);
-    }
-
-    .mandi-card h3 {
-      color: #166534;
-      margin-bottom: 5px;
-    }
-
-    .location {
-      color: #6b7280;
-      font-size: 14px;
-      margin-bottom: 15px;
-    }
-
-    .crop {
-      border-top: 1px solid #e5e7eb;
-      padding: 14px 0;
-    }
-
-    .crop-name {
-      font-weight: bold;
-    }
-
-    .price {
-      font-size: 23px;
-      font-weight: bold;
-      margin: 5px 0;
-    }
-
-    .up {
-      color: #15803d;
-    }
-
-    .down {
-      color: #dc2626;
-    }
-
-    .details {
-      display: flex;
-      justify-content: space-between;
-      color: #6b7280;
-      font-size: 13px;
-    }
-
-    .compare-btn {
-      width: 100%;
-      padding: 11px;
-      margin-top: 10px;
-      border: none;
-      border-radius: 7px;
-      background: #166534;
-      color: white;
-      cursor: pointer;
-    }
-
-    .compare-btn:hover {
-      background: #14532d;
-    }
-
-    /* AI */
-    .ai-box {
-      margin-top: 35px;
-      padding: 25px;
-      border-radius: 14px;
-      background: #ecfdf5;
-      border: 1px solid #bbf7d0;
-    }
-
-    .ai-box h2 {
-      color: #166534;
-      margin-bottom: 10px;
-    }
-
-    /* Footer */
-    footer {
-      background: #14532d;
-      color: white;
-      padding: 25px 7%;
-      text-align: center;
-    }
-
-    @media(max-width: 700px) {
-      header {
-        flex-direction: column;
-        gap: 15px;
-      }
-
-      .stats {
-        grid-template-columns: 1fr;
-      }
-
-      .search-box {
-        flex-direction: column;
-      }
-
-      .hero h1 {
-        font-size: 28px;
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-  <!-- HEADER -->
-  <header>
-    <div class="logo">🌾 KrishiSetu</div>
-
-    <nav>
-      <a href="#">Home</a>
-      <a href="#">Mandi Prices</a>
-      <a href="#">Buyers</a>
-      <a href="#">My Crops</a>
-    </nav>
-  </header>
-
-
-  <!-- HERO -->
-  <section class="hero">
-
-    <h1>Today's Mandi Prices</h1>
-
-    <p>
-      Check crop prices, compare mandis and find the better market for your produce.
-    </p>
-
-    <div class="search-box">
-
-      <input
-        type="text"
-        id="search"
-        placeholder="Search crop or mandi..."
-        onkeyup="searchMandi()"
-      >
-
-      <select id="cropFilter" onchange="searchMandi()">
-        <option value="all">All Crops</option>
-        <option value="wheat">Wheat</option>
-        <option value="mustard">Mustard</option>
-        <option value="soybean">Soybean</option>
-        <option value="onion">Onion</option>
-      </select>
-
-    </div>
-
-  </section>
-
+# 💧 Green Monitor AI — Predictive Data Center Cooling & Water Optimization
 
-  <!-- STATS -->
-  <section class="stats">
+> **"Don't cool everything equally. Predict the heat, cool only as much as needed, and minimize water and energy."**
 
-    <div class="stat">
-      <p>Mandis Covered</p>
-      <h2>16+</h2>
-    </div>
+Green Monitor AI is an AI-powered predictive thermal intelligence and resource optimization platform for hyperscale and enterprise AI data centers. It transforms cooling from a reactive, uniform energy-and-water drain into a proactive, non-uniform, model-predictive operation.
 
-    <div class="stat">
-      <p>Live Crop Prices</p>
-      <h2>50+</h2>
-    </div>
-
-    <div class="stat">
-      <p>Price Updates</p>
-      <h2>Live</h2>
-    </div>
+---
 
-  </section>
+## 🚀 How to Run the Website
 
+This application is built with **zero external dependencies** — no `npm install`, Node.js, or Python server setup required.
 
-  <!-- MANDI CARDS -->
-  <main class="container">
+1. Navigate to the project directory:
+   ```
+   C:\Users\Sona Jain\.gemini\antigravity\scratch\green-monitor-ai\
+   ```
+2. Simply **double-click** [`index.html`](file:///C:/Users/Sona%20Jain/.gemini/antigravity/scratch/green-monitor-ai/index.html) to open the interactive live demo in any modern browser (Chrome, Edge, Firefox, Brave, Safari).
+3. Alternatively, you can launch a local web server if desired:
+   ```powershell
+   # In PowerShell / Terminal:
+   python -m http.server 8080
+   # or
+   npx serve .
+   ```
 
-    <h2>🏪 Mandi Rates</h2>
+---
 
-    <div class="mandi-grid" id="mandiContainer">
+## 🌟 Key Features Built Into the Website
 
+1. **Live 16-Rack Floor Heatmap (4x4 HPC Matrix)**:
+   - Real-time thermal telemetry for NVIDIA H100 SXM5, A100 80GB, and L40S clusters.
+   - Dynamic color-coding (Cool `<55°C`, Optimal `55–70°C`, Warm `70–75°C`, Critical Alert `>75°C`).
+   - Click on any rack to inspect its IPMI telemetry, pump RPM, $\Delta T$, and 15-min forecast.
 
-      <!-- Jaipur -->
-      <div class="mandi-card"
-           data-search="jaipur wheat mustard onion">
+2. **Interactive Workload Spike Simulator**:
+   - **Inject 70B LLM Training**: Spikes Racks A1–A4 to 95% GPU compute load.
+   - **Burst Inference Wave**: Surges query traffic to Racks B & C.
+   - **Night Off-Peak**: Simulates idle compute and maximum free-air economizer savings.
+   - **Custom Workload Slider**: Real-time slider (10% to 100% compute load).
 
-        <h3>Jaipur Surajpole Mandi</h3>
+3. **Real-Time Predictive vs Reactive Canvas Graphs**:
+   - **15-Min Heat Anticipation Curve**: Displays actual GPU die temperature, AI 15-minute forecast line, and the ASHRAE A1 safe threshold ($75^\circ\text{C}$).
+   - **Water & Energy Demand Comparison**: Rolling side-by-side comparison of Traditional baseline vs Green Monitor AI demand.
 
-        <p class="location">
-          📍 Jaipur, Rajasthan • 18 km away
-        </p>
+4. **Resource KPI Dashboard**:
+   - **Water Consumption**: Displays live consumption and model-estimated potential water saved (`~1,820 L/day / -22.1%`).
+   - **Cooling Power**: Dynamic chiller and pump power reduction (`~740 kW / -28.4%`).
+   - **PUE & WUE Ratings**: PUE `1.14` (vs industry standard `1.58`), WUE `0.41 L/kWh` (vs industry standard `1.80`).
+   - **Carbon & Cost Avoided**: Live daily dollar savings and $\text{kg CO}_2\text{e}$ offsets.
 
-        <div class="crop">
-          <span class="crop-name">Wheat</span>
+5. **60-Second Guided Pitch Tour**:
+   - One-click button in navbar that highlights key features step-by-step for hackathon judges.
 
-          <div class="price">₹2,650/qtl</div>
+6. **Judges' Technical Deep-Dive Modal**:
+   - Contains the full mathematical optimization formulation, 4-tier closed-loop system architecture, water evaporation thermodynamics, and answers to judges' tough questions.
 
-          <span class="up">▲ +2.3%</span>
+---
 
-          <div class="details">
-            <span>Range: ₹2420–₹2780</span>
-            <span>Arrival: 8400 Qtl</span>
-          </div>
-        </div>
+## 📐 Mathematical Optimization Model
 
-        <div class="crop">
-          <span class="crop-name">Mustard</span>
+Green Monitor AI frames cooling as a constrained model predictive control (MPC) problem solved dynamically over a receding horizon $H$:
 
-          <div class="price">₹5,820/qtl</div>
+$$\min_{\mathbf{u}_t} \quad \sum_{k=0}^{H-1} \Big[ \alpha \cdot \text{Cost}_{\text{water}}(\mathbf{u}_{t+k}) + \beta \cdot \text{Cost}_{\text{energy}}(\mathbf{u}_{t+k}) \Big]$$
 
-          <span class="up">▲ +1.0%</span>
+### Hard Physical Constraints:
+1. **Die Temperature Safety Limit:**
+   $$T_{\text{die}, i}(t + k) \le T_{\text{safe}} \quad (75.0^\circ\text{C}) \quad \forall \text{ rack } i$$
+2. **Valve & Pump Actuator Limits:**
+   $$\mathbf{u}_{\min} \le \mathbf{u}_t \le \mathbf{u}_{\max} \quad (5 \le F_i \le 25 \text{ L/min})$$
+3. **Anti-Condensation Limit:**
+   $$T_{\text{inlet}} \ge T_{\text{dew\_point}} + 2.0^\circ\text{C}$$
 
-          <div class="details">
-            <span>Range: ₹5450–₹5950</span>
-            <span>Freight: ₹35</span>
-          </div>
-        </div>
+---
 
-        <button class="compare-btn"
-                onclick="compare('Jaipur Surajpole Mandi')">
-          Compare Mandi
-        </button>
+## 🎤 2-Minute Hackathon Pitch Script
 
-      </div>
+When presenting to judges, follow this structure:
 
+1. **Hook (15 seconds):**
+   > *"AI models are becoming massive, and the data centers running them consume trillions of liters of clean drinking water every year just for cooling. The problem is that traditional cooling treats the entire facility uniformly—blasting maximum chilled water even to idle servers."*
 
-      <!-- Ajmer -->
-      <div class="mandi-card"
-           data-search="ajmer wheat mustard">
+2. **The Solution (30 seconds):**
+   > *"We built Green Monitor AI. Instead of reacting after servers overheat, our system uses time-series forecasting to predict thermal spikes 15 minutes ahead. It routes coolant proportionally: high cooling for active GPU training racks, minimum cooling for idle racks."*
 
-        <h3>Ajmer Krishi Upaj Mandi</h3>
+3. **Live Demo (45 seconds):**
+   > *"Notice our live heatmap. Now let me click 'Inject 70B LLM Training'. Watch Racks A1–A4 jump to 95% workload. Instead of waiting for temperatures to breach 80°C, the green predictive curve ramps up coolant flow 8 minutes ahead. We keep every GPU under 75°C, while cutting water consumption by over 22%—saving 1,800+ liters of water every day in this cluster alone."*
 
-        <p class="location">
-          📍 Ajmer, Rajasthan • 32 km away
-        </p>
+4. **Safety & Enterprise Readiness (30 seconds):**
+   > *"Judges often ask: What if the AI makes a mistake? Green Monitor AI operates as an advisory layer with a hardwired BMS safety governor. If any rack comes within 3°C of the limit, hardware bypass instantly forces 100% emergency cooling. Zero hardware risk, maximum sustainability."*
 
-        <div class="crop">
-          <span class="crop-name">Wheat</span>
+---
 
-          <div class="price">₹2,520/qtl</div>
+## 🛡️ Answers to Judges' Toughest Questions
 
-          <span class="up">▲ +0.4%</span>
+* **Q: "Why not just run fans at a fixed medium speed?"**
+  * **Answer:** Fixed cooling either under-cools during peak LLM training bursts (leading to thermal throttling or hardware degradation) or constantly over-cools during idle periods (wasting thousands of liters of evaporative cooling water).
+* **Q: "Are these water savings verified?"**
+  * **Answer:** In our prototype, savings are computed via ASHRAE TC 9.9 thermodynamic heat dissipation equations. In real deployments, savings are verified via magnetic flow sensors on the cooling tower makeup water line.
 
-          <div class="details">
-            <span>Range: ₹2350–₹2680</span>
-            <span>Arrival: 4200 Qtl</span>
-          </div>
-        </div>
+---
 
-        <div class="crop">
-          <span class="crop-name">Mustard</span>
-
-          <div class="price">₹5,690/qtl</div>
-
-          <span class="up">▲ +0.7%</span>
-
-          <div class="details">
-            <span>Range: ₹5300–₹5800</span>
-            <span>Freight: ₹55</span>
-          </div>
-        </div>
-
-        <button class="compare-btn"
-                onclick="compare('Ajmer Krishi Upaj Mandi')">
-          Compare Mandi
-        </button>
-
-      </div>
-
-
-      <!-- Kota -->
-      <div class="mandi-card"
-           data-search="kota wheat soybean mustard">
-
-        <h3>Kota Bhamashah Mandi</h3>
-
-        <p class="location">
-          📍 Kota, Rajasthan • 95 km away
-        </p>
-
-        <div class="crop">
-          <span class="crop-name">Wheat</span>
-
-          <div class="price">₹2,710/qtl</div>
-
-          <span class="up">▲ +2.6%</span>
-
-          <div class="details">
-            <span>Range: ₹2480–₹2820</span>
-            <span>Arrival: 16500 Qtl</span>
-          </div>
-        </div>
-
-        <div class="crop">
-          <span class="crop-name">Soybean</span>
-
-          <div class="price">₹4,720/qtl</div>
-
-          <span class="up">▲ +1.5%</span>
-
-          <div class="details">
-            <span>Range: ₹4400–₹4890</span>
-            <span>Freight: ₹110</span>
-          </div>
-        </div>
-
-        <button class="compare-btn"
-                onclick="compare('Kota Bhamashah Mandi')">
-          Compare Mandi
-        </button>
-
-      </div>
-
-
-      <!-- Delhi -->
-      <div class="mandi-card"
-           data-search="delhi onion potato tomato">
-
-        <h3>Delhi Azadpur Mandi</h3>
-
-        <p class="location">
-          📍 Delhi • 240 km away
-        </p>
-
-        <div class="crop">
-          <span class="crop-name">Onion</span>
-
-          <div class="price">₹2,050/qtl</div>
-
-          <span class="up">▲ +6.7%</span>
-
-          <div class="details">
-            <span>Range: ₹1650–₹2250</span>
-            <span>Arrival: 45000 Qtl</span>
-          </div>
-        </div>
-
-        <div class="crop">
-          <span class="crop-name">Tomato</span>
-
-          <div class="price">₹2,400/qtl</div>
-
-          <span class="up">▲ +6.6%</span>
-
-          <div class="details">
-            <span>Range: ₹1800–₹2800</span>
-            <span>Freight: ₹210</span>
-          </div>
-        </div>
-
-        <button class="compare-btn"
-                onclick="compare('Delhi Azadpur Mandi')">
-          Compare Mandi
-        </button>
-
-      </div>
-
-    </div>
-
-
-    <!-- AI SECTION -->
-    <div class="ai-box">
-
-      <h2>🤖 AI Price Intelligence</h2>
-
-      <p>
-        <strong>Wheat:</strong>
-        Current modal price is ₹2,650/qtl.
-      </p>
-
-      <p>
-        📈 Price trend is positive. Based on the current trend,
-        farmers can compare nearby mandis before selling.
-      </p>
-
-      <br>
-
-      <button class="compare-btn"
-              onclick="showRecommendation()">
-        Get AI Recommendation
-      </button>
-
-      <p id="recommendation"></p>
-
-    </div>
-
-  </main>
-
-
-  <!-- FOOTER -->
-  <footer>
-
-    <h3>🌾 KrishiSetu</h3>
-
-    <p>
-      Smart Mandi Intelligence • Better Price Discovery • Direct Market Access
-    </p>
-
-    <p>
-      © 2026 KrishiSetu
-    </p>
-
-  </footer>
-
-
-  <script>
-
-    // SEARCH FUNCTION
-    function searchMandi() {
-
-      let search =
-        document.getElementById("search")
-        .value
-        .toLowerCase();
-
-      let filter =
-        document.getElementById("cropFilter")
-        .value
-        .toLowerCase();
-
-      let cards =
-        document.querySelectorAll(".mandi-card");
-
-      cards.forEach(card => {
-
-        let data =
-          card.getAttribute("data-search");
-
-        let searchMatch =
-          data.includes(search);
-
-        let cropMatch =
-          filter === "all" ||
-          data.includes(filter);
-
-        if (searchMatch && cropMatch) {
-          card.style.display = "block";
-        } else {
-          card.style.display = "none";
-        }
-
-      });
-
-    }
-
-
-    // COMPARE BUTTON
-    function compare(mandi) {
-
-      alert(
-        "You selected " +
-        mandi +
-        " for market comparison."
-      );
-
-    }
-
-
-    // AI RECOMMENDATION
-    function showRecommendation() {
-
-      document.getElementById("recommendation").innerHTML =
-        "<br><strong>AI Suggestion:</strong> " +
-        "Wheat prices are showing a positive trend. " +
-        "Compare nearby mandis, transportation cost and " +
-        "expected selling price before making a decision.";
-
-    }
-
-  </script>
-
-</body>
-</html>
+## 📁 Directory Structure
+
+```
+green-monitor-ai/
+├── index.html        # Main interactive web dashboard
+├── styles.css        # Enterprise glassmorphism styling & animations
+├── app.js            # Real-time simulation loop, MPC logic & Canvas charts
+└── README.md         # Documentation, pitch script, and architecture guide
+```

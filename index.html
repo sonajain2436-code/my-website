@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Green Monitor AI — Predictive Data Center Cooling & Water Optimization</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="dark-theme">
+  <!-- Top Global Navbar -->
+  <header class="navbar">
+    <div class="nav-brand">
+      <div class="brand-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+          <path d="M12 11a3 3 0 1 0 0 6 3 3 0 0 0 0-6z" fill="currentColor" opacity="0.3"></path>
+        </svg>
+      </div>
+      <div>
+        <div class="brand-title">
+          <span>GREEN MONITOR</span> <span class="badge-ai">AI</span>
+        </div>
+        <div class="brand-subtitle">Predictive Cooling & Water Intelligence Engine</div>
+      </div>
+    </div>
+
+    <div class="nav-center">
+      <div class="status-indicator">
+        <span class="pulse-dot"></span>
+        <span class="status-text" id="system-status-text">PREDICTIVE MPC ACTIVE</span>
+      </div>
+      <div class="facility-tag">FACILITY: AP-SOUTH-1 (8.4 MW HPC)</div>
+    </div>
+
+    <div class="nav-actions">
+      <!-- Mode Toggle Switch -->
+      <div class="mode-toggle-wrapper" title="Switch between Traditional reactive cooling and Green Monitor AI predictive optimization">
+        <span class="mode-label" id="mode-label-trad">Traditional</span>
+        <label class="switch">
+          <input type="checkbox" id="ai-mode-toggle" checked>
+          <span class="slider round"></span>
+        </label>
+        <span class="mode-label active" id="mode-label-ai">Green Monitor AI</span>
+      </div>
+
+      <button id="btn-deep-dive" class="btn btn-secondary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="16" x2="12" y2="12"></line>
+          <line x1="12" y1="8" x2="12.01" y2="8"></line>
+        </svg>
+        Judges' Deep Dive
+      </button>
+
+      <button id="btn-judge-tour" class="btn btn-primary glow-button">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="5 3 19 12 5 21 5 3"></polygon>
+        </svg>
+        60s Pitch Tour
+      </button>
+    </div>
+  </header>
+
+  <!-- Live Notice / Banner -->
+  <div class="alert-banner" id="status-banner">
+    <div class="banner-content">
+      <span class="banner-badge">OPTIMIZATION ACTIVE</span>
+      <span class="banner-text" id="banner-text">
+        Proactively predicting rack heat profiles 15 minutes ahead. Throttling idle rack coolant lines to reduce evaporative water loss while holding peak die temps below 75°C.
+      </span>
+    </div>
+    <div class="banner-metric">
+      <span class="banner-metric-label">Estimated Water Saved Today:</span>
+      <span class="banner-metric-val" id="banner-water-saved">1,824 L (22.1%)</span>
+    </div>
+  </div>
+
+  <main class="dashboard-container">
+    <!-- Top KPI Grid -->
+    <section class="kpi-grid">
+      <!-- Card 1: Water Consumption -->
+      <div class="kpi-card" id="kpi-water">
+        <div class="kpi-header">
+          <div class="kpi-title-wrap">
+            <span class="kpi-icon water-icon">💧</span>
+            <div>
+              <div class="kpi-title">Water Consumption</div>
+              <div class="kpi-subtitle">Cooling tower makeup + closed loop</div>
+            </div>
+          </div>
+          <span class="kpi-badge badge-green" id="water-delta-badge">-22.1% SAVED</span>
+        </div>
+        <div class="kpi-body">
+          <div class="kpi-main-metric">
+            <span class="metric-number" id="kpi-water-current">6,426</span>
+            <span class="metric-unit">L/day</span>
+          </div>
+          <div class="kpi-submetrics">
+            <div class="submetric">
+              <span class="sub-label">Baseline (Traditional):</span>
+              <span class="sub-val" id="kpi-water-baseline">8,250 L/day</span>
+            </div>
+            <div class="submetric highlight-saving">
+              <span class="sub-label">Model-Estimated Saving:</span>
+              <span class="sub-val" id="kpi-water-savings">1,824 L/day</span>
+            </div>
+          </div>
+        </div>
+        <div class="kpi-progress">
+          <div class="progress-bar water-bar" id="water-progress-bar" style="width: 77.8%;"></div>
+        </div>
+      </div>
+
+      <!-- Card 2: Cooling Power / Energy -->
+      <div class="kpi-card" id="kpi-energy">
+        <div class="kpi-header">
+          <div class="kpi-title-wrap">
+            <span class="kpi-icon energy-icon">⚡</span>
+            <div>
+              <div class="kpi-title">Cooling Energy Draw</div>
+              <div class="kpi-subtitle">Chiller compressor, pumps & CRAC fans</div>
+            </div>
+          </div>
+          <span class="kpi-badge badge-green" id="energy-delta-badge">-28.4% SAVED</span>
+        </div>
+        <div class="kpi-body">
+          <div class="kpi-main-metric">
+            <span class="metric-number" id="kpi-energy-current">1,860</span>
+            <span class="metric-unit">kW</span>
+          </div>
+          <div class="kpi-submetrics">
+            <div class="submetric">
+              <span class="sub-label">Baseline (Over-cooling):</span>
+              <span class="sub-val" id="kpi-energy-baseline">2,600 kW</span>
+            </div>
+            <div class="submetric highlight-saving">
+              <span class="sub-label">Power Demand Reduced:</span>
+              <span class="sub-val" id="kpi-energy-savings">740 kW</span>
+            </div>
+          </div>
+        </div>
+        <div class="kpi-progress">
+          <div class="progress-bar energy-bar" id="energy-progress-bar" style="width: 71.6%;"></div>
+        </div>
+      </div>
+
+      <!-- Card 3: PUE & WUE Efficiency -->
+      <div class="kpi-card" id="kpi-efficiency">
+        <div class="kpi-header">
+          <div class="kpi-title-wrap">
+            <span class="kpi-icon eff-icon">🌱</span>
+            <div>
+              <div class="kpi-title">Efficiency Indices</div>
+              <div class="kpi-subtitle">ASHRAE thermal compliance</div>
+            </div>
+          </div>
+          <span class="kpi-badge badge-teal">CLASS A1</span>
+        </div>
+        <div class="kpi-body">
+          <div class="dual-metric">
+            <div class="metric-col">
+              <div class="metric-col-title">PUE (Power Usage)</div>
+              <div class="metric-col-val" id="kpi-pue">1.14</div>
+              <div class="metric-col-sub">Ind. Avg: 1.58</div>
+            </div>
+            <div class="metric-divider"></div>
+            <div class="metric-col">
+              <div class="metric-col-title">WUE (Water Usage)</div>
+              <div class="metric-col-val" id="kpi-wue">0.41</div>
+              <div class="metric-col-sub">L/kWh (Avg: 1.80)</div>
+            </div>
+          </div>
+        </div>
+        <div class="compliance-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          Zero Safe-Threshold Violations (Max Temp: <span id="kpi-max-temp">69.4°C</span> &lt; 75°C)
+        </div>
+      </div>
+
+      <!-- Card 4: Environmental & Carbon Impact -->
+      <div class="kpi-card" id="kpi-carbon">
+        <div class="kpi-header">
+          <div class="kpi-title-wrap">
+            <span class="kpi-icon carbon-icon">🌍</span>
+            <div>
+              <div class="kpi-title">Carbon & Cost Impact</div>
+              <div class="kpi-subtitle">Daily avoided externalities</div>
+            </div>
+          </div>
+          <span class="kpi-badge badge-purple">LIVE OFFSET</span>
+        </div>
+        <div class="kpi-body">
+          <div class="kpi-main-metric">
+            <span class="metric-number" id="kpi-co2-saved">348</span>
+            <span class="metric-unit">kg CO₂e/day</span>
+          </div>
+          <div class="kpi-submetrics">
+            <div class="submetric">
+              <span class="sub-label">Cost Saved (Electricity):</span>
+              <span class="sub-val" id="kpi-cost-energy">$142 / day</span>
+            </div>
+            <div class="submetric">
+              <span class="sub-label">Cost Saved (Water Utility):</span>
+              <span class="sub-val" id="kpi-cost-water">$29 / day</span>
+            </div>
+          </div>
+        </div>
+        <div class="annual-forecast">
+          <span>Projected Annual Savings:</span>
+          <strong>$62,415 • 665,760 Liters</strong>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Grid: Heatmap & Control Deck -->
+    <section class="main-layout">
+      <!-- Left: 16-Rack Floor Heatmap & Environmental Context -->
+      <div class="layout-column col-heatmap">
+        <div class="card glass-card">
+          <div class="card-header">
+            <div>
+              <h2 class="card-title">Data Center Floor Heatmap (16 HPC Racks)</h2>
+              <p class="card-subtitle">Click any rack to inspect telemetry, valve flow, and 15-min thermal prediction</p>
+            </div>
+            <div class="rack-legend">
+              <span class="legend-item"><span class="legend-box cool"></span> Cool (&lt;55°C)</span>
+              <span class="legend-item"><span class="legend-box optimal"></span> Optimal (55–70°C)</span>
+              <span class="legend-item"><span class="legend-box warm"></span> Warm (70–75°C)</span>
+              <span class="legend-item"><span class="legend-box alert"></span> High (&gt;75°C)</span>
+            </div>
+          </div>
+
+          <!-- 4x4 Server Racks Grid -->
+          <div class="rack-grid" id="rack-grid-container">
+            <!-- Dynamically populated by app.js -->
+          </div>
+
+          <!-- Ambient Environment & Free-Cooling Economizer -->
+          <div class="ambient-footer">
+            <div class="ambient-header">
+              <span class="sub-header-title">WEATHER & OUTDOOR CONDITIONS (AP-SOUTH-1)</span>
+              <span class="economizer-status" id="economizer-badge">
+                <span class="indicator-icon">🍃</span> Economizer Mode: PARTIAL FREE-COOLING
+              </span>
+            </div>
+            <div class="ambient-metrics-row">
+              <div class="ambient-stat">
+                <span class="amb-label">Ambient Dry-Bulb:</span>
+                <strong id="amb-temp">24.2°C</strong>
+              </div>
+              <div class="ambient-stat">
+                <span class="amb-label">Wet-Bulb Temp:</span>
+                <strong id="amb-wetbulb">17.8°C</strong>
+              </div>
+              <div class="ambient-stat">
+                <span class="amb-label">Outdoor Humidity:</span>
+                <strong id="amb-humidity">56% RH</strong>
+              </div>
+              <div class="ambient-stat">
+                <span class="amb-label">Cooling Tower Eff:</span>
+                <strong id="tower-eff">84.5%</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Charts & Simulator Deck -->
+      <div class="layout-column col-controls">
+        <!-- Interactive Workload & Scenario Simulator -->
+        <div class="card glass-card control-card">
+          <div class="card-header">
+            <div>
+              <h3 class="card-title">Interactive Workload Injection Simulator</h3>
+              <p class="card-subtitle">Test how AI predicts spikes vs traditional reactive delay</p>
+            </div>
+            <span class="simulator-tag">DEMO ENGINE</span>
+          </div>
+
+          <div class="scenario-buttons-grid">
+            <button class="btn-scenario active" data-scenario="balanced" id="sc-balanced">
+              <span class="sc-icon">⚖️</span>
+              <div class="sc-info">
+                <strong>Standard Balanced Load</strong>
+                <small>Routine production inference & APIs</small>
+              </div>
+            </button>
+
+            <button class="btn-scenario" data-scenario="llm-spike" id="sc-llm">
+              <span class="sc-icon">🚀</span>
+              <div class="sc-info">
+                <strong>Inject 70B LLM Training (Racks A)</strong>
+                <small>Massive sudden 95% GPU compute spike</small>
+              </div>
+            </button>
+
+            <button class="btn-scenario" data-scenario="inference-burst" id="sc-burst">
+              <span class="sc-icon">⚡</span>
+              <div class="sc-info">
+                <strong>Burst Inference Wave (Racks B & C)</strong>
+                <small>Sudden user query surge</small>
+              </div>
+            </button>
+
+            <button class="btn-scenario" data-scenario="off-peak" id="sc-night">
+              <span class="sc-icon">🌙</span>
+              <div class="sc-info">
+                <strong>Night Off-Peak / Cold Front</strong>
+                <small>Idle compute + high free-air economizing</small>
+              </div>
+            </button>
+          </div>
+
+          <!-- Custom Workload Sliders -->
+          <div class="slider-control-box">
+            <div class="slider-row">
+              <div class="slider-label-wrap">
+                <span>Synthetic Compute Load:</span>
+                <strong id="slider-load-val">58%</strong>
+              </div>
+              <input type="range" min="10" max="100" value="58" class="custom-range" id="slider-load">
+            </div>
+
+            <div class="optimization-policy-row">
+              <span class="policy-label">AI Optimization Target:</span>
+              <div class="policy-pill-group">
+                <button class="policy-pill active" data-policy="max-water">💧 Max Water Saver</button>
+                <button class="policy-pill" data-policy="balanced">⚖️ Balanced (Water + kWh)</button>
+                <button class="policy-pill" data-policy="max-cooling">❄️ Conservative (Max Cooling)</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Real-Time Chart 1: Thermal Anticipation Curve -->
+        <div class="card glass-card chart-card">
+          <div class="card-header chart-header">
+            <div>
+              <h3 class="card-title">15-Min Proactive Heat Prediction vs Reality</h3>
+              <p class="card-subtitle">AI adjusts coolant flow <em>before</em> temperature exceeds limit</p>
+            </div>
+            <div class="chart-legend">
+              <span class="c-legend actual"><span class="c-dot"></span> Actual Temp</span>
+              <span class="c-legend ai-pred"><span class="c-dot dashed"></span> AI 15m Forecast</span>
+              <span class="c-legend safe-limit"><span class="c-line-limit"></span> Safe Limit (75°C)</span>
+            </div>
+          </div>
+          <div class="canvas-wrapper">
+            <canvas id="thermal-chart" height="150"></canvas>
+          </div>
+          <div class="chart-footer-note">
+            <span class="bullet-ai">✔</span> 
+            <span id="chart-insight-text">Feedforward controller pre-cooled Rack A1 8 minutes before batch kickoff, preventing thermal overshoot.</span>
+          </div>
+        </div>
+
+        <!-- Real-Time Chart 2: Resource Savings Live Comparison -->
+        <div class="card glass-card chart-card">
+          <div class="card-header chart-header">
+            <div>
+              <h3 class="card-title">Water & Energy Demand: Baseline vs AI</h3>
+              <p class="card-subtitle">Dynamic chilled-water throttling minimizes unnecessary evaporative loss</p>
+            </div>
+            <div class="chart-legend">
+              <span class="c-legend trad"><span class="c-dot red"></span> Traditional Baseline</span>
+              <span class="c-legend optimized"><span class="c-dot green"></span> Green Monitor AI</span>
+            </div>
+          </div>
+          <div class="canvas-wrapper">
+            <canvas id="resource-chart" height="140"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hackathon Quick Pitch & Value Prop Bar -->
+    <section class="value-prop-strip">
+      <div class="prop-item">
+        <div class="prop-num">01</div>
+        <div class="prop-desc">
+          <strong>Detect Heat ❌ vs Predict Heat ✅</strong>
+          <span>Replaces reactive PID thermal lag with feedforward model predictive forecasting.</span>
+        </div>
+      </div>
+      <div class="prop-divider"></div>
+      <div class="prop-item">
+        <div class="prop-num">02</div>
+        <div class="prop-desc">
+          <strong>Non-Uniform Zonal Cooling</strong>
+          <span>Cooling is routed proportionally to compute demand rather than blanket max over-cooling.</span>
+        </div>
+      </div>
+      <div class="prop-divider"></div>
+      <div class="prop-item">
+        <div class="prop-num">03</div>
+        <div class="prop-desc">
+          <strong>Dual-Resource Constrained Optimization</strong>
+          <span>Minimizes water and power while mathematically guaranteeing GPU temperature ≤ 75°C.</span>
+        </div>
+      </div>
+      <div class="prop-divider"></div>
+      <div class="prop-item">
+        <div class="prop-num">04</div>
+        <div class="prop-desc">
+          <strong>Hardware-Level Safety Watchdog</strong>
+          <span>Automated fail-safe bypass ensures AI never compromises mission-critical server hardware.</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal 1: Rack Telemetry Detail Inspector -->
+  <div class="modal-backdrop" id="rack-modal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title" id="m-rack-name">Rack A1 — NVIDIA H100 SXM5 Cluster</h3>
+          <p class="modal-subtitle" id="m-rack-ip">IPMI: 10.240.12.11 • Sub-Zone 1A • Direct-to-Chip Liquid Cooling</p>
+        </div>
+        <button class="modal-close" id="btn-close-rack-modal">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-kpi-row">
+          <div class="m-kpi">
+            <span class="m-kpi-label">Current Die Temp</span>
+            <span class="m-kpi-val" id="m-temp">64.2°C</span>
+            <span class="m-kpi-sub">Safe limit: 75.0°C</span>
+          </div>
+          <div class="m-kpi">
+            <span class="m-kpi-label">AI 15m Forecast</span>
+            <span class="m-kpi-val highlight-ai" id="m-forecast">66.8°C</span>
+            <span class="m-kpi-sub">Trend: Moderate Upward</span>
+          </div>
+          <div class="m-kpi">
+            <span class="m-kpi-label">GPU Utilization</span>
+            <span class="m-kpi-val" id="m-util">65%</span>
+            <span class="m-kpi-sub">8x GPUs Active</span>
+          </div>
+          <div class="m-kpi">
+            <span class="m-kpi-label">Coolant Flow</span>
+            <span class="m-kpi-val" id="m-flow">14.2 L/min</span>
+            <span class="m-kpi-sub">Valve open: 58%</span>
+          </div>
+        </div>
+
+        <div class="m-section">
+          <h4>Thermal & Cooling Telemetry</h4>
+          <table class="telemetry-table">
+            <tbody>
+              <tr>
+                <td>Inlet Coolant Temperature:</td>
+                <td id="m-inlet">18.5°C</td>
+                <td>Outlet Coolant Temperature:</td>
+                <td id="m-outlet">32.4°C (ΔT = 13.9°C)</td>
+              </tr>
+              <tr>
+                <td>Rack Power Draw:</td>
+                <td id="m-power">10.2 kW</td>
+                <td>Fan / Pump RPM:</td>
+                <td id="m-rpm">3,850 RPM (62%)</td>
+              </tr>
+              <tr>
+                <td>AI Action Recommendation:</td>
+                <td colspan="3" id="m-action" class="text-green">HOLD current flow; anticipate batch finish in 12 min → schedule ramp-down.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="m-section">
+          <h4>Failsafe Governor Status</h4>
+          <div class="failsafe-box">
+            <div class="fs-status">
+              <span class="pulse-dot green"></span>
+              <strong>Hardware Governor ARMED</strong>
+            </div>
+            <p>If temperature reaches 72.0°C (3°C safety buffer), bypass will automatically override AI setpoint to 100% maximum chilled flow.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="btn-close-rack-modal-2">Close Inspector</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Technical Deep Dive & Judges FAQ -->
+  <div class="modal-backdrop" id="deep-dive-modal">
+    <div class="modal-dialog modal-large">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title">Green Monitor AI — Technical Architecture & Defense</h3>
+          <p class="modal-subtitle">Mathematical formulation, system layers, and answers to hackathon judges</p>
+        </div>
+        <button class="modal-close" id="btn-close-deep-dive">&times;</button>
+      </div>
+
+      <div class="modal-body deep-dive-content">
+        <!-- Tab Navigation -->
+        <div class="tabs-nav">
+          <button class="tab-btn active" data-tab="tab-math">Mathematical Model</button>
+          <button class="tab-btn" data-tab="tab-arch">System Architecture</button>
+          <button class="tab-btn" data-tab="tab-water">Water Physics</button>
+          <button class="tab-btn" data-tab="tab-faq">Judges' FAQ & Defense</button>
+        </div>
+
+        <!-- Tab 1: Mathematical Formulation -->
+        <div class="tab-content active" id="tab-math">
+          <h4>1. Constrained Model Predictive Optimization</h4>
+          <p>Traditional data centers run PID loops that only react after server dies overheat. Green Monitor AI solves a receding-horizon optimization problem every 60 seconds:</p>
+          
+          <div class="math-box">
+            $$\min_{\mathbf{u}_t} \quad \sum_{k=0}^{H-1} \Big[ \alpha \cdot \text{Water}_{\text{evap}}(\mathbf{u}_{t+k}) + \beta \cdot \text{Power}_{\text{chiller}}(\mathbf{u}_{t+k}) \Big]$$
+            <br>
+            <strong>Subject to Hard Physical Constraints:</strong><br>
+            1. $\; T_{\text{die}, i}(t + k) \le T_{\text{safe}} \quad (75.0^\circ\text{C}) \quad \forall \text{ rack } i$<br>
+            2. $\; \mathbf{u}_{\min} \le \mathbf{u}_t \le \mathbf{u}_{\max} \quad (\text{Flow rate: } 5 \le F \le 30 \text{ L/min})$<br>
+            3. $\; T_{\text{inlet}} \ge T_{\text{dew\_point}} + 2^\circ\text{C} \quad (\text{Anti-condensation limit})$
+          </div>
+
+          <p class="math-explainer">
+            Where <code>u_t</code> represents the vector of actuator setpoints (chilled water valve apertures, CRAC fan variable frequency drives, and cooling tower fan speeds). <code>&alpha;</code> and <code>&beta;</code> allow dynamic weighting between water conservation and power cost.
+          </p>
+        </div>
+
+        <!-- Tab 2: System Architecture -->
+        <div class="tab-content" id="tab-arch">
+          <h4>2. Four-Tier Closed-Loop Intelligence Architecture</h4>
+          <div class="arch-flow">
+            <div class="arch-box">
+              <strong>Tier 1: Telemetry Stream</strong>
+              <span>IPMI, Redfish, NVIDIA NVML (GPU temp, power, SM util), flow meters, wet-bulb sensors.</span>
+            </div>
+            <div class="arch-arrow">↓</div>
+            <div class="arch-box">
+              <strong>Tier 2: Thermal Forecaster (AI)</strong>
+              <span>Time-series regression & queue analyzer predicts T(t + 15m) based on pending job scheduling.</span>
+            </div>
+            <div class="arch-arrow">↓</div>
+            <div class="arch-box">
+              <strong>Tier 3: Constrained Optimizer</strong>
+              <span>Calculates optimal flow rate for each rack zone to minimize total evaporative and chiller load.</span>
+            </div>
+            <div class="arch-arrow">↓</div>
+            <div class="arch-box">
+              <strong>Tier 4: Safety Watchdog & BMS Actuator</strong>
+              <span>PLC interface with hardware-level fail-safe bypass. Modulates valves and VFD pumps.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 3: Water Physics -->
+        <div class="tab-content" id="tab-water">
+          <h4>3. How Water Is Saved in Cooling Towers</h4>
+          <p>
+            In typical evaporative cooling towers, for every kilowatt-hour of heat dissipated into the atmosphere, approximately <strong>1.5 to 2.5 liters of water evaporate</strong> into thin air.
+          </p>
+          <div class="physics-cards">
+            <div class="phys-card">
+              <h5>Evaporation Reduction</h5>
+              <p>By preventing unneeded over-cooling in idle/moderate racks, total heat dumped to the cooling tower is minimized, directly reducing required latent heat evaporation (m_evap = Q / h_fg).</p>
+            </div>
+            <div class="phys-card">
+              <h5>Economizer Free-Air Utilization</h5>
+              <p>When wet-bulb temperature is favorable (&lt; 18°C), the system routes air directly through heat exchangers, bypassing evaporative cooling towers entirely.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 4: Judges FAQ -->
+        <div class="tab-content" id="tab-faq">
+          <h4>4. Defending Tough Questions from Hackathon Judges</h4>
+          
+          <div class="faq-item">
+            <strong class="faq-q">Q1: What if the AI model makes a wrong prediction and a GPU overheats?</strong>
+            <p class="faq-a">
+              <strong>A:</strong> Green Monitor AI operates as an <em>advisory supervisory layer</em>. The physical Building Management System (BMS) retains a hardwired safety watchdog. If any rack approaches within 3°C of the 75°C threshold, the hardware governor immediately overrides the AI setpoint and forces 100% full emergency cooling. Server integrity is never compromised.
+            </p>
+          </div>
+
+          <div class="faq-item">
+            <strong class="faq-q">Q2: Are these water savings real or theoretical?</strong>
+            <p class="faq-a">
+              <strong>A:</strong> In this prototype, savings are computed using empirical thermodynamic formulas validated by ASHRAE TC 9.9 standards for liquid and air cooling. In a production pilot, savings are measured against calibrated magnetic flow meters on the cooling tower makeup line.
+            </p>
+          </div>
+
+          <div class="faq-item">
+            <strong class="faq-q">Q3: Why not just run fans at a fixed medium speed?</strong>
+            <p class="faq-a">
+              <strong>A:</strong> Modern AI training jobs create massive, sudden thermal spikes (e.g. 70B parameter LLM backpropagation kicks all 8 GPUs from 200W to 700W each in seconds). Static cooling either under-cools during peak load (causing thermal throttling) or constantly over-cools during idle periods (wasting thousands of liters of water).
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-primary" id="btn-close-deep-dive-2">Got It</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tour Spotlight Overlay -->
+  <div class="tour-overlay" id="tour-overlay">
+    <div class="tour-tooltip" id="tour-tooltip">
+      <div class="tour-step" id="tour-step-badge">Step 1 of 4</div>
+      <h4 class="tour-title" id="tour-title">16-Rack Thermal Heatmap</h4>
+      <p class="tour-body" id="tour-body">Each tile represents an HPC rack. Notice how idle racks are kept cool with minimum water flow, while high-compute racks receive targeted cooling.</p>
+      <div class="tour-controls">
+        <button class="btn btn-secondary btn-sm" id="btn-tour-skip">Skip Pitch</button>
+        <button class="btn btn-primary btn-sm" id="btn-tour-next">Next Step →</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
